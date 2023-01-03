@@ -1,24 +1,15 @@
 
 const form = document.querySelector("form");
 
-//adding a event listener when the DOM content being loaded than it gets local storage object and print user details
+//adding a event listener when the DOM content being loaded than it gets user details from server and print user details
 document.addEventListener('DOMContentLoaded', e =>{
-
-    // //getting the keys of local storage object & iterating the keys and parse them in json format
-    // Object.keys(localStorage).forEach((key) => {
-    //     //getting the objects(user details) from local storage
-    //     stringifiedDetailsOfPeople = localStorage.getItem(key);
-    //     //parsing the object
-    //     detailsOfPeople = JSON.parse(stringifiedDetailsOfPeople);
-    //     //calling the function to show the local storage object as list items
-    //     addUserToScreen(detailsOfPeople); 
-    //     });
 
     //using axios fetch user details from crudcrud endpoint
     axios.get('https://crudcrud.com/api/9b3dfd50626e409284bb97d5a111057e/userDetails')
     .then((response)=>{
         for(let i of response.data){
             addUserToScreen(i);
+            // console.log(i);
         }
     })
     .catch(err=>console.log(err));
@@ -47,21 +38,13 @@ function onbuttonclick(event)
         'phone': phone,
         'passwd': passwd
     };
-    // //converting the userDetails object into string
-    // let userDetails_serialized = JSON.stringify(userDetails);
-    // //setting the user details into the local storage as an object
-    // localStorage.setItem(userDetails.email,userDetails_serialized);
 
     //using axios to send this userDetails object in post request to crudcrud
     axios.post('https://crudcrud.com/api/9b3dfd50626e409284bb97d5a111057e/userDetails',userDetails)
     .then((response)=>{
         addUserToScreen(response.data);
-        // console.log(response);
+        // console.log(response.data);
     }).catch(err=>console.log(err));
-
-
-    //calling addUserToScreen func to add the new user object and display on screen
-    // addUserToScreen(userDetails);
     
 }
 
@@ -98,7 +81,12 @@ function addUserToScreen(object){
 
     //delete the user(li) from userlist(ul) & from local storage 
     delBtn.addEventListener('click', (e) => {
-        localStorage.removeItem(object.email);
+        console.log(object._id);
+        axios.delete(`https://crudcrud.com/api/9b3dfd50626e409284bb97d5a111057e/userDetails/${object._id}`)
+        .then((response)=>{
+            console.log(response.data);
+        })
+        .catch(err=>console.log(err));
         li.remove();
     });
 
