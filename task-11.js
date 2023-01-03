@@ -4,15 +4,24 @@ const form = document.querySelector("form");
 //adding a event listener when the DOM content being loaded than it gets local storage object and print user details
 document.addEventListener('DOMContentLoaded', e =>{
 
-    //getting the keys of local storage object & iterating the keys and parse them in json format
-    Object.keys(localStorage).forEach((key) => {
-        //getting the objects(user details) from local storage
-        stringifiedDetailsOfPeople = localStorage.getItem(key);
-        //parsing the object
-        detailsOfPeople = JSON.parse(stringifiedDetailsOfPeople);
-        //calling the function to show the local storage object as list items
-        addUserToScreen(detailsOfPeople); 
-        });
+    // //getting the keys of local storage object & iterating the keys and parse them in json format
+    // Object.keys(localStorage).forEach((key) => {
+    //     //getting the objects(user details) from local storage
+    //     stringifiedDetailsOfPeople = localStorage.getItem(key);
+    //     //parsing the object
+    //     detailsOfPeople = JSON.parse(stringifiedDetailsOfPeople);
+    //     //calling the function to show the local storage object as list items
+    //     addUserToScreen(detailsOfPeople); 
+    //     });
+
+    //using axios fetch user details from crudcrud endpoint
+    axios.get('https://crudcrud.com/api/9b3dfd50626e409284bb97d5a111057e/userDetails')
+    .then((response)=>{
+        for(let i of response.data){
+            addUserToScreen(i);
+        }
+    })
+    .catch(err=>console.log(err));
 });
 
 // validating to validate the inputs
