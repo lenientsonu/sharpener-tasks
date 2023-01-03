@@ -84,10 +84,10 @@ function addUserToScreen(object){
         console.log(object._id);
         axios.delete(`https://crudcrud.com/api/9b3dfd50626e409284bb97d5a111057e/userDetails/${object._id}`)
         .then((response)=>{
-            console.log(response.data);
+            li.remove();
         })
         .catch(err=>console.log(err));
-        li.remove();
+        
     });
 
     editBtn.addEventListener('click', (e) => {
@@ -96,6 +96,13 @@ function addUserToScreen(object){
         document.getElementById('phone').value = object.phone;
         document.getElementById('passwd').value = object.passwd;
         li.remove();
+        axios.delete(`https://crudcrud.com/api/9b3dfd50626e409284bb97d5a111057e/userDetails/${object._id}`)
+        .then((response)=>{
+            
+            console.log('updated');
+            // document.getElementById('submit-btn').innerText = 'Update';
+        })
+        .catch(err=>console.log(err));
     });
 }
 
