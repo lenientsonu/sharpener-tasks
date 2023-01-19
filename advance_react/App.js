@@ -1,22 +1,51 @@
-import React from 'react';
-import './NewExpense.css';
-// import './ExpenseForm';
-import ExpenseForm from './ExpenseForm';
+import React, {useState} from "react";
+import Expenses from "./components/Expenses/Expenses";
+import NewExpense from "./components/NewExpense/NewExpense";
 
-const NewExpense = (props) => {
-    const saveExpenseDataHandler = (enteredExpenseData) => {
-        const expenseData = {
-            ...enteredExpenseData,
-            id: Math.random().toString()
-        };
-        // console.log(expenseData);
-        props.onAddExpense(expenseData);
-    }
-    return (
-        <div className='new-expense'>
-            <ExpenseForm onSaveExpenseData={saveExpenseDataHandler}  />
-        </div>
-    );
+const Initial_Expenses = [
+  {
+    id: "e1",
+    title: "Toilet Paper",
+    amount: 94.12,
+    date: new Date(2020, 7, 14)
+  },
+  { 
+    id: "e2", 
+    title: "New TV", 
+    amount: 799.49, 
+    date: new Date(2021, 2, 12) 
+  },
+  {
+    id: "e3",
+    title: "Car Insurance",
+    amount: 294.67,
+    date: new Date(2021, 2, 28)
+  },
+  {
+    id: "e4",
+    title: "New Desk (Wooden)",
+    amount: 450,
+    date: new Date(2021, 5, 12)
+  },
+];
+
+function App() {
+  const [expenses, setExpenses] = useState(Initial_Expenses);
+
+  const addExpenseHandler = (expense) => {
+    // console.log(expense);
+    setExpenses(prevExpenses => {
+      return [expense,...prevExpenses];
+    });
+  }
+
+  return (
+    <div>
+      <NewExpense onAddExpense={addExpenseHandler} />
+      <h1>Expense Items</h1>
+       <Expenses items={expenses} />
+    </div>
+  );
 }
 
-export default NewExpense;
+export default App;
