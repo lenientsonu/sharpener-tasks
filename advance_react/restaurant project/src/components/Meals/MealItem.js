@@ -4,9 +4,11 @@ import "./MealItem.css";
 const MealItem = (props) => {
     return (
         <li className='meal'>
-            <h3>{props.title}</h3>
-            <span>{props.detail}</span>
-            <span>{props.price}</span>
+            <div>
+                <h3>{props.title}</h3>
+                <div className='description'>{props.detail}</div>
+                <div className='price'>₹{props.price}</div>
+            </div>
         </li>
     );
 };
