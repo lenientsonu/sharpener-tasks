@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./components/Layout/Header";
 import Summary from "./components/Meals/Summary";
 import Meals from "./components/Meals/Meals";
@@ -32,10 +32,20 @@ const mealsList = [
 ];
 
 function App() {
+    const [isShowCart, setIsShowCart] = useState(false);
+
+    const closeCartHandler = () => {
+        setIsShowCart(false)
+    }
+
+    const showCartHandler = () => {
+        setIsShowCart(true)
+    }
+
     return (
         <React.Fragment>
-            <Cart />
-            <Header />
+            {isShowCart && <Cart closeCart={closeCartHandler}/>}
+            <Header showCart={showCartHandler} />
             <main>
                 <Summary />
                 <Meals meals={mealsList} />
