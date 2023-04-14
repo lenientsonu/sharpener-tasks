@@ -3,6 +3,7 @@ import Header from "./components/Layout/Header";
 import Summary from "./components/Meals/Summary";
 import Meals from "./components/Meals/Meals";
 import Cart from "./components/Cart/Cart";
+import CartProvider from "./store/CartProvider";
 
 const mealsList = [
     {
@@ -35,22 +36,22 @@ function App() {
     const [isShowCart, setIsShowCart] = useState(false);
 
     const closeCartHandler = () => {
-        setIsShowCart(false)
-    }
+        setIsShowCart(false);
+    };
 
     const showCartHandler = () => {
-        setIsShowCart(true)
-    }
+        setIsShowCart(true);
+    };
 
     return (
-        <React.Fragment>
-            {isShowCart && <Cart onCloseCart={closeCartHandler}/>}
+        <CartProvider>
+            {isShowCart && <Cart onCloseCart={closeCartHandler} />}
             <Header onShowCart={showCartHandler} />
             <main>
                 <Summary />
                 <Meals meals={mealsList} />
             </main>
-        </React.Fragment>
+        </CartProvider>
     );
 }
 

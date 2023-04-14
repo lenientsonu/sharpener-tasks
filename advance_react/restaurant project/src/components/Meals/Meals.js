@@ -6,6 +6,7 @@ import "./Meals.css";
 const Meals = (props) => {
     const mealsList = props.meals.map((meal) => (
         <MealItem
+            id={meal.id}
             key={meal.id}
             title={meal.title}
             detail={meal.detail}
