@@ -6,13 +6,60 @@ const CartProvider = (props) => {
     const [totalAmount, setTotalAmount] = useState(0);
 
     const addItemToCartHandler = (item) => {
-        setItems([item, ...items]);
+        // Check if item already exists in the cart
+        const existingItemIndex = items.findIndex(
+            (existingItem) => existingItem.id === item.id
+        );
+
+        // If item exists, update its quantity
+        if (existingItemIndex !== -1) {
+            const existingItem = items[existingItemIndex];
+            const updatedItem = {
+                ...existingItem,
+                quantity:
+                    parseInt(existingItem.quantity) + parseInt(item.quantity),
+            };
+            const updatedItems = [...items];
+            updatedItems[existingItemIndex] = updatedItem;
+            setItems(updatedItems);
+        } else {
+            // Otherwise, add the item to the cart
+            setItems((prevItems) => [...prevItems, item]);
+        }
+
+        // Update the total amount
         setTotalAmount(
-            (prevTotalAmount) => prevTotalAmount + item.quantity * item.price
+            (prevTotalAmount) =>
+                prevTotalAmount + parseInt(item.quantity) * item.price
         );
     };
 
-    const removeItemToCartHandler = (id) => {};
+    const removeItemToCartHandler = (id) => {
+        // Find the item with the given ID
+        const existingItemIndex = items.findIndex((item) => item.id === id);
+
+        // If item quantity is greater than 1, update its quantity
+        if (items[existingItemIndex].quantity > 1) {
+            const existingItem = items[existingItemIndex];
+            const updatedItem = {
+                ...existingItem,
+                quantity: existingItem.quantity - 1,
+            };
+            const updatedItems = [...items];
+            updatedItems[existingItemIndex] = updatedItem;
+            setItems(updatedItems);
+        } else {
+            // Otherwise, remove the item from the cart
+            const updatedItems = items.filter((item) => item.id !== id);
+            setItems(updatedItems);
+        }
+
+        // Update the total amount
+        setTotalAmount(
+            (prevTotalAmount) =>
+                prevTotalAmount - items[existingItemIndex].price
+        );
+    };
 
     const cartContext = {
         items: items,
