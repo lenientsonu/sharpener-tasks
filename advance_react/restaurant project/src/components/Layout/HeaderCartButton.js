@@ -6,16 +6,7 @@ import "./HeaderCartButton.css";
 const HeaderCartButton = (props) => {
     const cartCtx = useContext(CartContext);
 
-    const numberOfCartItems = cartCtx.items.reduce((curNumber, item) => {
-        return curNumber + Number(item.quantity);
-    }, 0);
-
-    // const numberOfCartItems = cartCtx.items.length
-
-    // let numberOfCartItems = 0;
-    // cartCtx.items.forEach(item=>{
-    //     numberOfCartItems += Number(item.quantity)
-    // })
+    const numberOfCartItems = cartCtx.items.length
 
     return (
         <button className='button' onClick={props.onShowCart}>

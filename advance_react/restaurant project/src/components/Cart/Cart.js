@@ -10,7 +10,7 @@ const Cart = (props) => {
         <Modal onClose={props.onCloseCart}>
             <ul className='cart-items'>
                 {cartCtx.items.map((item) => (
-                    <li className='cart-item'>
+                    <li className='cart-item' key={item.id}>
                         <div>
                             <h2> {item.title} </h2>
                             <div className='detail'>
