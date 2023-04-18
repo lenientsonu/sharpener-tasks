@@ -1,37 +1,16 @@
+import React, { useState, useContext } from "react";
 import Stack from "react-bootstrap/Stack";
 import Button from "react-bootstrap/Button";
-import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import CartItem from "./CartItem";
+import CartContext from "../../store/cart-context";
 
 import "./Cart.css";
 
-const cartProducts = [
-    {
-        title: "Colors",
-        price: 100,
-        imageUrl:
-            "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
-        quantity: 2,
-    },
-    {
-        title: "Black and white Colors",
-        price: 50,
-        imageUrl:
-            "https://prasadyash2411.github.io/ecom-website/img/Album%202.png",
-        quantity: 3,
-    },
-    {
-        title: "Yellow and Black Colors",
-        price: 70,
-        imageUrl:
-            "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
-        quantity: 1,
-    },
-];
-
 const Cart = (props) => {
     const [show, setShow] = useState(false);
+
+    const CartCtx = useContext(CartContext);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -55,16 +34,16 @@ const Cart = (props) => {
                         </Stack>
                         <hr />
                     </div>
-                    {cartProducts.map((product) => (
-                        <CartItem 
-                        title={product.title}
-                        price={product.price}
-                        quantity={product.quantity}
+                    {CartCtx.items.map((product) => (
+                        <CartItem
+                            title={product.title}
+                            price={product.price}
+                            quantity={product.quantity}
                         />
                     ))}
                     <div className='total'>
                         <span>Total</span>
-                        $0
+                        <span>{CartCtx.totalAmount}</span>
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
