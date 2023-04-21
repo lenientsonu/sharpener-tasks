@@ -1,45 +1,57 @@
-import Expenses from "./components/Expenses/Expenses";
-import NewExpense from "./components/NewExpense/NewExpense";
+import React, { useState } from "react";
+
+import MoviesList from "./components/MoviesList";
+import "./App.css";
 
 function App() {
-  const expenses = [
-    {
-      id: "e1",
-      title: "Toilet Paper",
-      amount: 94.12,
-      date: new Date(2020, 7, 14)
-    },
-    { 
-      id: "e2", 
-      title: "New TV", 
-      amount: 799.49, 
-      date: new Date(2021, 2, 12) 
-    },
-    {
-      id: "e3",
-      title: "Car Insurance",
-      amount: 294.67,
-      date: new Date(2021, 2, 28)
-    },
-    {
-      id: "e4",
-      title: "New Desk (Wooden)",
-      amount: 450,
-      date: new Date(2021, 5, 12)
-    },
-  ];
+    const [movies, setMovies] = useState([]);
 
-  const addExpenseHandler = (expense) => {
-    console.log(expense);
+    // function fetchMoviesHandler() {
+    //     fetch("https://swapi.dev/api/films/")
+    //         .then((response) => {
+    //             return response.json();
+    //         })
+    //         .then((data) => {
+    //             const transformedMovies = data.results.map((movieData) => {
+    //                 return {
+    //                     id: movieData.episode_id,
+    //                     title: movieData.title,
+    //                     openingText: movieData.opening_crawl,
+    //                     releaseDate: movieData.release_date,
+    //                 };
+    //             });
+    //             setMovies(transformedMovies);
+    //         });
+    // }
+
+    async function fetchMoviesHandler() {
+      try {
+          const response = await fetch("https://swapi.dev/api/films/");
+          const data = await response.json();
+          const transformedMovies = data.results.map((movieData) => {
+              return {
+                  id: movieData.episode_id,
+                  title: movieData.title,
+                  openingText: movieData.opening_crawl,
+                  releaseDate: movieData.release_date,
+              };
+          });
+          setMovies(transformedMovies);
+      } catch (error) {
+          console.log(error);
+      }
   }
 
-  return (
-    <div>
-      <NewExpense onAddExpense={addExpenseHandler} />
-      <h1>Expense Items</h1>
-       <Expenses items={expenses} />
-    </div>
-  );
+    return (
+        <React.Fragment>
+            <section>
+                <button onClick={fetchMoviesHandler}>Fetch Movies</button>
+            </section>
+            <section>
+                <MoviesList movies={movies} />
+            </section>
+        </React.Fragment>
+    );
 }
 
 export default App;
