@@ -1,21 +1,24 @@
 import Header from "../components/Layout/Header";
 import Footer from "../components/Layout/Footer";
-import Products from "../components/Products/Products";
-import Cart from "../components/Cart/Cart";
-import CartProvider from "../store/CartProvider";
+import Tours from "../components/Home/Tours";
+import Button from "react-bootstrap/Button";
 
-import "./Home.css";
+import PlayBtn from '../assets/play.png'
+
+import './Home.css'
 
 const HomePage = () => {
     return (
-        <CartProvider>
-            <>
-                <Header />
-                <Products />
-                <Cart title={"See the Cart"} color={"primary"} />
-                <Footer />
-            </>
-        </CartProvider>
+        <>
+            <div className="play">
+            <Header />
+                <Button variant='outline-info' size="lg">Get our Latest Album</Button>{" "}
+                <br />
+                <img src={PlayBtn} alt='' />
+            </div>
+            <Tours />
+            <Footer />
+        </>
     );
 };
 
