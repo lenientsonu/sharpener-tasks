@@ -14,23 +14,30 @@ function App() {
         setIsLoading(true);
 
         try {
-            const response = await fetch("https://swapi.dev/api/films/");
-            console.log("request fetched");
+            const response = await fetch(
+                "https://sharpener-projects-default-rtdb.asia-southeast1.firebasedatabase.app/movies.json"
+            );
 
             if (!response.ok) {
                 throw new Error("Something went wrong... Reloading");
             }
 
             const data = await response.json();
-            const transformedMovies = data.results.map((movieData) => {
-                return {
-                    id: movieData.episode_id,
-                    title: movieData.title,
-                    openingText: movieData.opening_crawl,
-                    releaseDate: movieData.release_date,
-                };
-            });
-            setMovies(transformedMovies);
+
+            console.log(data);
+
+            const loadedMovies = [];
+
+            for (const key in data) {
+                loadedMovies.push({
+                    id: key,
+                    title: data[key].title,
+                    openingText: data[key].openingText,
+                    releaseDate: data[key].releaseDate,
+                });
+            }
+
+            setMovies(loadedMovies);
         } catch (error) {
             setError(error.message);
         }
@@ -41,9 +48,20 @@ function App() {
         fetchMoviesHandler();
     }, [fetchMoviesHandler]);
 
-    const addMovieHandler = (movie) => {
-        console.log(movie);
-    }
+    const addMovieHandler = useCallback(async (movie) => {
+        const response = await fetch(
+            "https://sharpener-projects-default-rtdb.asia-southeast1.firebasedatabase.app/movies.json",
+            {
+                method: "POST",
+                body: JSON.stringify(movie),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+        // const data = response.json();
+        // console.log(data);
+    }, []);
 
     let content = <p>Loading...</p>;
     if (!isLoading && movies.length > 0) {
