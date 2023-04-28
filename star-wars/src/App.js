@@ -39,7 +39,11 @@ function App() {
 
     useEffect(() => {
         fetchMoviesHandler();
-    }, []);
+    }, [fetchMoviesHandler]);
+
+    const addMovieHandler = (movie) => {
+        console.log(movie);
+    }
 
     let content = <p>Loading...</p>;
     if (!isLoading && movies.length > 0) {
@@ -55,7 +59,7 @@ function App() {
     return (
         <React.Fragment>
             <section>
-                <AddMovie />
+                <AddMovie onAddMovie={addMovieHandler} />
             </section>
             <section>
                 <button onClick={fetchMoviesHandler}>Fetch Movies</button>

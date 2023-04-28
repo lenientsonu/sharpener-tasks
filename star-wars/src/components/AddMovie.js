@@ -1,6 +1,6 @@
 import "./AddMovie.css";
 
-const AddMovie = () => {
+const AddMovie = (props) => {
     const onSubmitHandler = (event) => {
         event.preventDefault();
         const movie = {
@@ -9,7 +9,7 @@ const AddMovie = () => {
             openingText: document.getElementById("text").value,
             releaseDate: document.getElementById("date").value,
         };
-        console.log(movie);
+        props.onAddMovie(movie);
     };
 
     return (
