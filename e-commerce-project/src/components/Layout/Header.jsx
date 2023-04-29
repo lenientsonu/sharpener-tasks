@@ -1,30 +1,40 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import HeaderCartButton from '../Cart/HeaderCartButton'
+import HeaderCartButton from "../Cart/HeaderCartButton";
+import { NavLink } from "react-router-dom";
 
-import './Header.css'
-
+import "./Header.css";
 
 const Header = () => {
     return (
         <>
-        <Navbar bg='dark' variant='dark' sticky="top">
-            <Container>
-                {/* <Navbar.Brand href="#home">Navbar</Navbar.Brand> */}
-                <Nav className='me-auto'>
-                    <Nav.Link href='/'>Home</Nav.Link>
-                    <Nav.Link href='#store'>Store</Nav.Link>
-                    <Nav.Link href='/about'>About</Nav.Link>
-                </Nav>
-                <HeaderCartButton />
-            </Container>
-        </Navbar>
-        <Container className="title">
-            <h1>The Generics</h1>
-        </Container>
+            <Navbar bg='dark' variant='dark' sticky='top'>
+                <Container>
+                    {/* <Navbar.Brand href="#home">Navbar</Navbar.Brand> */}
+                    <Nav className='me-auto'>
+                        <Nav.Link>
+                            <NavLink className="test" to='/'>Home</NavLink>
+                        </Nav.Link>
+                        <Nav.Link>
+                            <NavLink className="test" to='/store'>Store</NavLink>
+                        </Nav.Link>
+                        <Nav.Link>
+                            <NavLink className="test" to='/about'>About</NavLink>
+                        </Nav.Link>
+                        <Nav.Link>
+                            <NavLink className="test" to='/contact'>Contact</NavLink>
+                        </Nav.Link>
+                    </Nav>
+                    <HeaderCartButton />
+                </Container>
+            </Navbar>
+            {/* <br /> */}
+            <div className='title'>
+                <h1>The Generics</h1>
+            </div>
         </>
-    )
+    );
 };
 
 export default Header;
