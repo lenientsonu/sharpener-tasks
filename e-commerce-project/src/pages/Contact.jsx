@@ -1,6 +1,3 @@
-import Header from "../components/Layout/Header";
-import Footer from "../components/Layout/Footer";
-
 import "./Contact.css";
 
 const ContactPage = () => {
@@ -31,7 +28,6 @@ const ContactPage = () => {
 
     return (
         <>
-            <Header />
             <section>
                 <h1>Contact Us</h1>
             </section>
@@ -50,7 +46,6 @@ const ContactPage = () => {
                 </div>
                 <button>Contact Us</button>
             </form>
-            <Footer />
         </>
     );
 };

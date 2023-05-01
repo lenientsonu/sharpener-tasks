@@ -14,22 +14,21 @@ const Header = () => {
                     {/* <Navbar.Brand href="#home">Navbar</Navbar.Brand> */}
                     <Nav className='me-auto'>
                         <Nav.Link>
-                            <NavLink className="test" to='/'>Home</NavLink>
+                            <NavLink activeClassName='active' className="test" to='/'>Home</NavLink>
                         </Nav.Link>
                         <Nav.Link>
-                            <NavLink className="test" to='/store'>Store</NavLink>
+                            <NavLink activeClassName='active' className="test" to='/store'>Store</NavLink>
                         </Nav.Link>
                         <Nav.Link>
-                            <NavLink className="test" to='/about'>About</NavLink>
+                            <NavLink activeClassName='active' className="test" to='/about'>About</NavLink>
                         </Nav.Link>
                         <Nav.Link>
-                            <NavLink className="test" to='/contact'>Contact</NavLink>
+                            <NavLink activeClassName='active' className="test" to='/contact'>Contact</NavLink>
                         </Nav.Link>
                     </Nav>
                     <HeaderCartButton />
                 </Container>
             </Navbar>
-            {/* <br /> */}
             <div className='title'>
                 <h1>The Generics</h1>
             </div>
