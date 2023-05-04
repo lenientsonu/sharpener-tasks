@@ -1,4 +1,5 @@
-import { Route, Switch } from "react-router-dom";
+import React, { useContext } from "react";
+import { Route, Switch, Redirect } from "react-router-dom";
 
 import HomePage from "./pages/Home";
 import AboutPage from "./pages/About";
@@ -12,11 +13,13 @@ import Header from "./components/Layout/Header";
 import Footer from "./components/Layout/Footer";
 
 import productsArr from "./store/productArr";
-import { AuthContextProvider } from "./store/auth-context";
+import AuthContext from "./store/auth-context";
 
 function App() {
+    const authCtx = useContext(AuthContext);
+
     return (
-        <AuthContextProvider>
+        <>
             <header>
                 <Header />
             </header>
@@ -26,7 +29,10 @@ function App() {
                         <HomePage />
                     </Route>
                     <Route path='/store' exact>
-                        <StorePage products={productsArr} />
+                        {authCtx.isLoggedIn && (
+                            <StorePage products={productsArr} />
+                        )}
+                        {!authCtx.isLoggedIn && <Redirect to='/login'/>}
                     </Route>
                     <Route path='/store/:productId'>
                         <ProductPage products={productsArr} />
@@ -48,7 +54,7 @@ function App() {
             <footer>
                 <Footer />
             </footer>
-        </AuthContextProvider>
+            </>
     );
 }
 
