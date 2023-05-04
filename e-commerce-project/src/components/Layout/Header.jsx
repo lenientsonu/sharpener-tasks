@@ -14,16 +14,51 @@ const Header = () => {
                     {/* <Navbar.Brand href="#home">Navbar</Navbar.Brand> */}
                     <Nav className='me-auto'>
                         <Nav.Link>
-                            <NavLink activeClassName='active' className="test" to='/'>Home</NavLink>
+                            <NavLink
+                                activeClassName='active'
+                                className='test'
+                                to='/'
+                            >
+                                Home
+                            </NavLink>
                         </Nav.Link>
                         <Nav.Link>
-                            <NavLink activeClassName='active' className="test" to='/store'>Store</NavLink>
+                            <NavLink
+                                activeClassName='active'
+                                className='test'
+                                to='/store'
+                            >
+                                Store
+                            </NavLink>
                         </Nav.Link>
                         <Nav.Link>
-                            <NavLink activeClassName='active' className="test" to='/about'>About</NavLink>
+                            <NavLink
+                                activeClassName='active'
+                                className='test'
+                                to='/about'
+                            >
+                                About
+                            </NavLink>
                         </Nav.Link>
+
                         <Nav.Link>
-                            <NavLink activeClassName='active' className="test" to='/contact'>Contact</NavLink>
+                            <NavLink
+                                activeClassName='active'
+                                className='test'
+                                to='/login'
+                            >
+                                Login
+                            </NavLink>
+                        </Nav.Link>
+
+                        <Nav.Link>
+                            <NavLink
+                                activeClassName='active'
+                                className='test'
+                                to='/contact'
+                            >
+                                Contact
+                            </NavLink>
                         </Nav.Link>
                     </Nav>
                     <HeaderCartButton />
