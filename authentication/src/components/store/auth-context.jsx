@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+let logoutTimer;
+
 const AuthContext = React.createContext({
     token: "",
     isLoggedIn: false,
@@ -16,11 +18,17 @@ export const AuthContextProvider = (props) => {
     const loginHandler = (token) => {
         localStorage.setItem("token", token);
         setToken(token);
+
+        logoutTimer = setTimeout(logoutHandler, 5 * 60000);
     };
 
     const logoutHandler = () => {
         localStorage.removeItem("token");
         setToken(null);
+
+        if(logoutTimer){
+            clearTimeout(logoutTimer)
+        }
     };
 
     const ContextValue = {
