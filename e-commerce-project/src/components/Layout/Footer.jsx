@@ -9,8 +9,7 @@ import "./Footer.css";
 
 const Footer = () => {
     return (
-        <Container>
-            <footer className='icons'>
+        <Container className='icons'>
                 <h3>The Generecis</h3>
                     <Stack direction='horizontal' gap={3}>
                         <a href='https://www.youtube.com'>
@@ -25,7 +24,6 @@ const Footer = () => {
                             <img src={FbIcon} alt='' />
                         </a>
                     </Stack>
-            </footer>
         </Container>
     );
 };

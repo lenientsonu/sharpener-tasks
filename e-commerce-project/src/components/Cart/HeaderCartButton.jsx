@@ -1,12 +1,13 @@
-import React,{useContext} from 'react';
-import CartContext from '../../store/cart-context';
+import React, { useContext } from "react";
+import CartContext from "../../store/cart-context";
 
 import Cart from "./Cart";
 
 import "./HeaderCartButton.css";
 
 const HeaderCartButton = () => {
-    const cartCtx = useContext(CartContext)
+    const cartCtx = useContext(CartContext);
+    console.log("cartCtx", cartCtx);
 
     return (
         <>

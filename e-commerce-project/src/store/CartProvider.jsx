@@ -37,6 +37,11 @@ const CartProvider = (props) => {
     const removeItemToCartHandler = (id) => {
         // Find the item with the given ID
         const existingItemIndex = items.findIndex((item) => item.id === id);
+        console.log(id, items);
+
+        if (existingItemIndex === -1) {
+            return;
+        }
 
         // If item quantity is greater than 1, update its quantity
         if (items[existingItemIndex].quantity > 1) {
@@ -61,11 +66,19 @@ const CartProvider = (props) => {
         );
     };
 
+    const clearCartHandler = () => {
+        console.log("Clearing cart...");
+        setItems([]);
+        setTotalAmount(0);
+        console.log("cart cleared");
+    };
+
     const cartContext = {
         items: items,
         totalAmount: totalAmount,
         addItem: addItemToCartHandler,
         removeItem: removeItemToCartHandler,
+        clearCart: clearCartHandler,
     };
 
     return (

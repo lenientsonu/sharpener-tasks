@@ -12,6 +12,10 @@ const ProductPage = (props) => {
         (product) => product.id === params.productId
     );
 
+    if(!product){
+       return <h1>No Product Found</h1>
+    }
+
     const reviews = product.reviews;
     console.log(reviews);
 

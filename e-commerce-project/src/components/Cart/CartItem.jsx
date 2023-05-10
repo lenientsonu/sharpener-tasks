@@ -1,7 +1,37 @@
+import React, { useContext } from "react";
+import CartContext from "../../store/cart-context";
+import AuthContext from "../../store/auth-context";
 import Stack from "react-bootstrap/Stack";
 import Button from "react-bootstrap/Button";
 
 const CartItem = (props) => {
+    const cartCtx = useContext(CartContext);
+    const authCtx = useContext(AuthContext);
+
+    const deleteFromServer = async (_id) => {
+        try {
+            const response = await fetch(
+                `https://crudcrud.com/api/876a4473e684414fae57b8c84e8fab3c/cart${authCtx.email.replace(
+                    /[@.]/g,
+                    ""
+                )}/${_id}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+            console.log("Product deleted on server:");
+        } catch (error) {
+            console.log("Error In deleting the data", error);
+        }
+    };
+
+    const ClickHandler = (event) => {
+        cartCtx.removeItem(props.id);
+        deleteFromServer(props._id);
+    };
 
     return (
         <div>
@@ -9,7 +39,9 @@ const CartItem = (props) => {
                 <span>{props.title}</span>
                 <span>{props.price}</span>
                 <span>{props.quantity}</span>
-                <Button variant='danger' onClick={props.onRemove}>Remove</Button>{" "}
+                <Button variant='danger' onClick={ClickHandler}>
+                    Remove
+                </Button>{" "}
             </Stack>
         </div>
     );

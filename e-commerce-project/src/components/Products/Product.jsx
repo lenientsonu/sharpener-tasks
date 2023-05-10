@@ -2,17 +2,47 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import CartContext from "../../store/cart-context";
+import AuthContext from "../../store/auth-context";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
-
-
 const Product = (props) => {
     const cartCtx = useContext(CartContext);
+    const authCtx = useContext(AuthContext);
+
+    const saveToServer = async (item) => {
+        try {
+            const itemData = {
+                id: item.id,
+                title: item.title,
+                price: item.price,
+                quantity: 1,
+            };
+            console.log(JSON.stringify(itemData));
+            const response = await fetch(
+                `https://crudcrud.com/api/876a4473e684414fae57b8c84e8fab3c/cart${authCtx.email.replace(
+                    /[@.]/g,
+                    ""
+                )}`,
+                {
+                    method: "POST",
+                    body: JSON.stringify(itemData),
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+            const data = await response.json();
+            console.log("Cart data updated on server:", data);
+        } catch (error) {
+            console.error("Error updating cart data:", error);
+        }
+    };
 
     const addProduct = (event) => {
         cartCtx.addItem({ ...props.product, quantity: 1 });
+        saveToServer(props.product);
     };
 
     return (

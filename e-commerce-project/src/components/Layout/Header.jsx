@@ -1,15 +1,22 @@
+import React, { useContext } from "react";
+
 import Container from "react-bootstrap/Container";
+import Button from "react-bootstrap/Button";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+
 import HeaderCartButton from "../Cart/HeaderCartButton";
 import { NavLink } from "react-router-dom";
+import AuthContext from "../../store/auth-context";
 
 import "./Header.css";
 
 const Header = () => {
+    const authCtx = useContext(AuthContext);
+
     return (
         <>
-            <Navbar bg='dark' variant='dark' sticky='top'>
+            <Navbar bg='dark' variant='dark' fixed='top'>
                 <Container>
                     {/* <Navbar.Brand href="#home">Navbar</Navbar.Brand> */}
                     <Nav className='me-auto'>
@@ -41,15 +48,17 @@ const Header = () => {
                             </NavLink>
                         </Nav.Link>
 
-                        <Nav.Link>
-                            <NavLink
-                                activeClassName='active'
-                                className='test'
-                                to='/login'
-                            >
-                                Login
-                            </NavLink>
-                        </Nav.Link>
+                        {!authCtx.isLoggedIn && (
+                            <Nav.Link>
+                                <NavLink
+                                    activeClassName='active'
+                                    className='test'
+                                    to='/login'
+                                >
+                                    Login
+                                </NavLink>
+                            </Nav.Link>
+                        )}
 
                         <Nav.Link>
                             <NavLink
@@ -61,7 +70,12 @@ const Header = () => {
                             </NavLink>
                         </Nav.Link>
                     </Nav>
-                    <HeaderCartButton />
+                    {authCtx.isLoggedIn && (
+                        <Button variant='info' className='logout' onClick={authCtx.logout}>
+                            Logout
+                        </Button>
+                    )}
+                    {authCtx.isLoggedIn && <HeaderCartButton />}
                 </Container>
             </Navbar>
             <div className='title'>

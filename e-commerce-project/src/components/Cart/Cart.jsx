@@ -1,9 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect, useCallback } from "react";
 import Stack from "react-bootstrap/Stack";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import CartItem from "./CartItem";
 import CartContext from "../../store/cart-context";
+import AuthContext from "../../store/auth-context";
 
 import "./Cart.css";
 
@@ -11,9 +12,56 @@ const Cart = (props) => {
     const [show, setShow] = useState(false);
 
     const CartCtx = useContext(CartContext);
+    const authCtx = useContext(AuthContext);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const getFromServer = useCallback(async () => {
+        try {
+            const response = await fetch(
+                `https://crudcrud.com/api/876a4473e684414fae57b8c84e8fab3c/cart${authCtx.email.replace(
+                    /[@.]/g,
+                    ""
+                )}`
+            );
+            const data = await response.json();
+            console.log("Cart data from the server:", data);
+            // data.forEach((item) => {
+            //     const existingItemIndex = CartCtx.items.findIndex(
+            //         (existingItem) => existingItem.id === item.id
+            //     );
+            //     if (existingItemIndex !== -1) {
+            //         const existingItem = CartCtx.items[existingItemIndex];
+            //         const updatedItem = {
+            //             ...existingItem,
+            //             quantity:
+            //                 parseInt(existingItem.quantity) +
+            //                 parseInt(item.quantity),
+            //         };
+            //         const updatedItems = [...CartCtx.items];
+            //         updatedItems[existingItemIndex] = updatedItem;
+            //         CartCtx.addItem(updatedItem);
+            //     } else {
+            //         CartCtx.addItem(item);
+            //     }
+            // });
+            data.map((item) => CartCtx.addItem(item));
+        } catch (error) {
+            console.error("Error while getting cart data:", error);
+        }
+    }, [CartCtx, authCtx.email]);
+
+    useEffect(() => {
+        if (CartCtx.items.length === 0) {
+            getFromServer();
+        }
+
+        return () => {
+            // cleanup function
+            console.log("Cleaning up useEffect in Cart.js...");
+        };
+    }, [CartCtx, getFromServer]);
 
     return (
         <>
@@ -36,6 +84,9 @@ const Cart = (props) => {
                     </div>
                     {CartCtx.items.map((product) => (
                         <CartItem
+                            key={product._id}
+                            _id={product._id}
+                            id={product.id}
                             title={product.title}
                             price={product.price}
                             quantity={product.quantity}

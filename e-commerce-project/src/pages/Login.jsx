@@ -37,8 +37,8 @@ const LoginPage = () => {
             );
             if (response.ok) {
                 const data = await response.json();
-                console.log(data, data.idToken);
-                authCtx.login(data.idToken);
+                console.log(data, data.idToken, data.email);
+                authCtx.login(data.idToken, data.email);
                 history.replace("/store");
             } else {
                 const errorData = await response.json();
